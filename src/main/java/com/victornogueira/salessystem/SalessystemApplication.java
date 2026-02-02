@@ -1,4 +1,4 @@
-package com.victornogueira.demo;
+package com.victornogueira.salessystem;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
