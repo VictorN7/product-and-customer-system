@@ -8,9 +8,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import com.victornogueira.salessystem.entities.Category;
 import com.victornogueira.salessystem.entities.Order;
 import com.victornogueira.salessystem.entities.User;
 import com.victornogueira.salessystem.entities.enums.OrderStatus;
+import com.victornogueira.salessystem.repositories.CategoryRepository;
 import com.victornogueira.salessystem.repositories.OrderRepository;
 import com.victornogueira.salessystem.repositories.UserRepository;
 
@@ -23,6 +25,10 @@ public class TestConfig implements CommandLineRunner{
 
 	@Autowired
 	private OrderRepository orderRepository;
+	
+	@Autowired
+	private CategoryRepository categoryRepository;
+	
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -39,8 +45,12 @@ public class TestConfig implements CommandLineRunner{
 		Order o4 = new Order(null, Instant.parse("2019-09-12T18:10:55Z"),OrderStatus.PAID, u4);
 		Order o5 = new Order(null, Instant.parse("2019-10-01T11:05:42Z"),OrderStatus.CANCELED, u5);
 		
+		Category c1 = new Category(null, "Eletronics");
+		Category c2 = new Category(null, "Books");
+		Category c3 = new Category(null, "Computers");
+		
 		userRepository.saveAll(Arrays.asList(u1,u2,u3,u4,u5)); // Instancia uma lista de usuários
 		orderRepository.saveAll(Arrays.asList(o1,o2,o3,o4,o5));
-		
+		categoryRepository.saveAll(Arrays.asList(c1,c2,c3));
 	} 
 }
