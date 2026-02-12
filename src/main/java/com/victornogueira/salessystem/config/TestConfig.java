@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import com.victornogueira.salessystem.entities.Category;
 import com.victornogueira.salessystem.entities.Order;
 import com.victornogueira.salessystem.entities.OrderItem;
+import com.victornogueira.salessystem.entities.Payment;
 import com.victornogueira.salessystem.entities.Product;
 import com.victornogueira.salessystem.entities.User;
 import com.victornogueira.salessystem.entities.enums.OrderStatus;
@@ -88,5 +89,22 @@ public class TestConfig implements CommandLineRunner{
 		p5.getCategories().add(c2);
 
 		productRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
+		
+		
+		// Payments
+		
+		
+		Payment pay1 = new Payment(null, Instant.parse("2019-06-20T21:53:07Z"), o1);
+		o1.setPayment(pay1);
+		
+		orderRepository.saveAll(Arrays.asList(o1));
+		
+//		Payment pay2 = new Payment(null, Instant.parse("2019-06-20T16:53:07Z"), o2);
+//		Payment pay3 = new Payment(null, Instant.parse("2019-06-20T11:53:07Z"), o3);
+//		Payment pay4 = new Payment(null, Instant.parse("2019-06-20T20:53:07Z"), o4);
+//		Payment pay5 = new Payment(null, Instant.parse("2019-06-20T13:53:07Z"), o5);
+		
+		
+		
 	} 
 }
