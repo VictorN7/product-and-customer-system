@@ -38,4 +38,26 @@ public class UserService {
 		
 		userRepository.deleteById(id);
 	}
+	
+	public User update(Long id, User user) {
+		
+		// Reference apenas prepara e deixa o objeto monitorado pra depois efetuar ações no banco de dados
+		// diferente do findById que vai até o banco e traz o objeto
+		
+		User entity = userRepository.getReferenceById(id); 
+		
+		updateData(entity, user);
+		
+		return userRepository.save(entity);
+		
+	}
+	
+	private void updateData(User entity, User updateUser) {
+		entity.setName(updateUser.getName());
+		entity.setEmail(updateUser.getEmail());
+		entity.setPhone(updateUser.getPhone());
+	}
+	
+	
+	
 }
