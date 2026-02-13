@@ -11,6 +11,8 @@ import com.victornogueira.salessystem.repositories.UserRepository;
 import com.victornogueira.salessystem.services.exceptions.DatabaseException;
 import com.victornogueira.salessystem.services.exceptions.ResourceNotFoundException;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class UserService {
 
@@ -22,7 +24,6 @@ public class UserService {
 	}
 
 	public User findById(Long id) {
-
 		return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 
@@ -41,7 +42,6 @@ public class UserService {
 		} catch (DataIntegrityViolationException e) {
 			throw new DatabaseException(e.getMessage());
 		}
-
 	}
 
 	public User update(Long id, User user) {
@@ -49,13 +49,14 @@ public class UserService {
 		// Reference apenas prepara e deixa o objeto monitorado pra depois efetuar ações
 		// no banco de dados
 		// diferente do findById que vai até o banco e traz o objeto
-
-		User entity = userRepository.getReferenceById(id);
-
-		updateData(entity, user);
-
-		return userRepository.save(entity);
-
+		
+		try {
+			User entity = userRepository.getReferenceById(id);
+			updateData(entity, user);
+			return userRepository.save(entity);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
 	}
 
 	private void updateData(User entity, User updateUser) {
