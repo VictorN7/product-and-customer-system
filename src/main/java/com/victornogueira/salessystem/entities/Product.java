@@ -26,7 +26,7 @@ public class Product {
 	private String name;
 	private String description;
 	private Double price;
-	private String imrUrl;
+	private String imgUrl;
 	
 	@ManyToMany
 	@JoinTable(name = "tb_product_category", 
@@ -45,7 +45,7 @@ public class Product {
 		this.name = name;
 		this.description = description;
 		this.price = price;
-		this.imrUrl = imrUrl;
+		this.imgUrl = imrUrl;
 	}
 
 	public Long getId() {
@@ -80,12 +80,12 @@ public class Product {
 		this.price = price;
 	}
 
-	public String getImrUrl() {
-		return imrUrl;
+	public String getImgUrl() {
+		return imgUrl;
 	}
 
-	public void setImrUrl(String imrUrl) {
-		this.imrUrl = imrUrl;
+	public void setImgUrl(String imrUrl) {
+		this.imgUrl = imrUrl;
 	}
 	
 	public Set<Category> getCategories() {
@@ -123,6 +123,6 @@ public class Product {
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price
-				+ ", imrUrl=" + imrUrl + "]";
+				+ ", imrUrl=" + imgUrl + "]";
 	}
 }
