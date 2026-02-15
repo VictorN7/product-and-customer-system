@@ -1,0 +1,67 @@
+package com.victornogueira.productandconsumer.services;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.stereotype.Service;
+
+import com.victornogueira.productandconsumer.entities.User;
+import com.victornogueira.productandconsumer.repositories.UserRepository;
+import com.victornogueira.productandconsumer.services.exceptions.DatabaseException;
+import com.victornogueira.productandconsumer.services.exceptions.ResourceNotFoundException;
+
+import jakarta.persistence.EntityNotFoundException;
+
+@Service
+public class UserService {
+
+	@Autowired
+	private UserRepository userRepository;
+
+	public List<User> findAll() {
+		return userRepository.findAll();
+	}
+
+	public User findById(Long id) {
+		return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+	}
+
+	public User insertUser(User user) {
+		return userRepository.save(user);
+	}
+
+	public void delete(Long id) {
+
+		try {
+			if (!userRepository.existsById(id)) {
+				throw new ResourceNotFoundException(id);
+			} else {
+				userRepository.deleteById(id);
+			}
+		} catch (DataIntegrityViolationException e) {
+			throw new DatabaseException(e.getMessage());
+		}
+	}
+
+	public User update(Long id, User user) {
+
+		// Reference apenas prepara e deixa o objeto monitorado pra depois efetuar ações
+		// no banco de dados
+		// diferente do findById que vai até o banco e traz o objeto
+		
+		try {
+			User entity = userRepository.getReferenceById(id);
+			updateData(entity, user);
+			return userRepository.save(entity);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
+	}
+
+	private void updateData(User entity, User updateUser) {
+		entity.setName(updateUser.getName());
+		entity.setEmail(updateUser.getEmail());
+		entity.setPhone(updateUser.getPhone());
+	}
+}

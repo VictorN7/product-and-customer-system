@@ -1,0 +1,41 @@
+package com.victornogueira.productandconsumer.resources.exceptions;
+
+import java.time.Instant;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import com.victornogueira.productandconsumer.services.exceptions.DatabaseException;
+import com.victornogueira.productandconsumer.services.exceptions.ResourceNotFoundException;
+
+import jakarta.servlet.http.HttpServletRequest;
+
+@ControllerAdvice // Intercepta as exceções que ocorrem para que o objeto possa executar o tratamento
+public class ResourceExceptionHandler {
+
+	@ExceptionHandler(ResourceNotFoundException.class) // Intercepta a requisição que se trata de ResourceNotFoundException
+	private ResponseEntity<StandardError> resourceNotFound(ResourceNotFoundException e, HttpServletRequest request){
+		
+		String error = "Resource not found";
+		HttpStatus status = HttpStatus.NOT_FOUND;
+		StandardError standardError = new StandardError(Instant.now(), status.value() , error , e.getMessage() , request.getRequestURI());
+		
+		return ResponseEntity.status(status).body(standardError);
+	}
+	
+	@ExceptionHandler(DatabaseException.class)
+	private ResponseEntity<StandardError> database(DatabaseException e, HttpServletRequest request){
+		
+		String error = "Database error";
+		HttpStatus status = HttpStatus.BAD_REQUEST;
+		StandardError standardError = new StandardError(Instant.now(), 
+				status.value(), 
+				error, 
+				e.getMessage(), 
+				request.getRequestURI());
+		
+		return ResponseEntity.status(status).body(standardError);
+	}
+}
