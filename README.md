@@ -26,7 +26,7 @@ O projeto foi construído com preocupações reais de mercado, como deploy em cl
 
 ## ☁️ Deploy e Configuração
 
-O projeto está deployado no Railway, com:
+O projeto está deployado no **Railway**, com:
 
 - Backend Spring Boot em produção
 - Banco PostgreSQL gerenciado na cloud
