@@ -1,13 +1,13 @@
 package com.victornogueira.productandconsumer.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.victornogueira.productandconsumer.entities.Category;
 import com.victornogueira.productandconsumer.repositories.CategoryRepository;
+import com.victornogueira.productandconsumer.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class CategoryService {
@@ -20,9 +20,7 @@ public class CategoryService {
 	}
 
 	public Category findById(Long Id) {
-		
-		Optional<Category> order = categoryRepository.findById(Id);
-		return order.get();
+		return categoryRepository.findById(Id).orElseThrow(() -> new ResourceNotFoundException(Id));
 	}
 	
 }
