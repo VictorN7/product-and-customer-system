@@ -76,6 +76,10 @@ com.victornogueira.productandconsumer
 
 ## 🔗 Endpoints Overview
 
+**Link to the Railway project for testing:** product-and-customer-system-production.up.railway.app
+
+**Note**: If you don't get the result you want, please try again, as this is a limited plan on Railway.
+
 ### Users
 
 - `POST /users` – create consumer
